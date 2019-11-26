@@ -263,7 +263,7 @@ function movetables() {
     COmovetable[j] = []
     for (var i = 0; i < draaien.length; i++) {
       draai2(draaien[i])
-      berekenCoordUitStaat()
+      berekenCoordUitStaatF1()
       COmovetable[j].push(COcoord)
       draai2(draaien[i])
       draai2(draaien[i])
@@ -276,7 +276,7 @@ function movetables() {
     EOmovetable[j] = []
     for (var i = 0; i < draaien.length; i++) {
       draai2(draaien[i])
-      berekenCoordUitStaat()
+      berekenCoordUitStaatF1()
       EOmovetable[j].push(EOcoord)
       draai2(draaien[i])
       draai2(draaien[i])
@@ -289,7 +289,7 @@ function movetables() {
     UD1movetable[j] = []
     for (var i = 0; i < draaien.length; i++) {
       draai2(draaien[i])
-      berekenCoordUitStaat()
+      berekenCoordUitStaatF1()
       UD1movetable[j].push(UD1coord)
       draai2(draaien[i])
       draai2(draaien[i])
@@ -297,5 +297,142 @@ function movetables() {
     }
   }
 }
-
 movetables()
+
+var draaienf2 = ["U", "U'", "U2", "D", "D'", "D2", "R2", "F2", "L2", "B2"]
+
+function draai3(d) {
+  var CPoud = CPstaat.slice(0)
+  var EPoud = EPstaat.slice(0)
+  var UD2oud = UD2staat.slice(0)
+  switch (d) {
+    case "U":
+      MoveElementsInArray(CPstaat, 3, 0)
+      MoveElementsInArray(EPstaat, 3, 0)
+      break;
+    case "U'":
+      MoveElementsInArray(CPstaat, 0, 3)
+      MoveElementsInArray(EPstaat, 0, 3)
+      break;
+    case "U2":
+      MoveElementsInArray(CPstaat, 3, 0)
+      MoveElementsInArray(CPstaat, 3, 0)
+      MoveElementsInArray(EPstaat, 3, 0)
+      MoveElementsInArray(EPstaat, 3, 0)
+      break;
+    case "D":
+      MoveElementsInArray(CPstaat, 7, 4)
+      MoveElementsInArray(EPstaat, 7, 4)
+      break;
+    case "D'":
+      MoveElementsInArray(CPstaat, 4, 7)
+      MoveElementsInArray(EPstaat, 4, 7)
+      break;
+    case "D2":
+      MoveElementsInArray(CPstaat, 7, 4)
+      MoveElementsInArray(CPstaat, 7, 4)
+      MoveElementsInArray(EPstaat, 7, 4)
+      MoveElementsInArray(EPstaat, 7, 4)
+      break;
+    case "R2":
+      //CP
+      CPstaat[1] = CPoud[5]
+      CPstaat[2] = CPoud[6]
+      CPstaat[5] = CPoud[1]
+      CPstaat[6] = CPoud[2]
+      //EP
+		  EPstaat[1] = EPoud[5]
+		  EPstaat[5] = EPoud[1]
+		  UD2staat[0] = UD2oud[1]
+		  UD2staat[1] = UD2oud[0]
+      break;
+    case "L2":
+      //CO
+      CPstaat[0] = CPoud[4]
+      CPstaat[3] = CPoud[7]
+      CPstaat[4] = CPoud[0]
+      CPstaat[7] = CPoud[3]
+      //EO
+      EPstaat[3] = EPoud[7]
+      EPstaat[7] = EPoud[3]
+		  UD2staat[2] = UD2oud[3]
+		  UD2staat[3] = UD2oud[2]
+      break;
+    case "F2":
+      //CO
+      CPstaat[2] = CPoud[4]
+      CPstaat[3] = CPoud[5]
+      CPstaat[4] = CPoud[2]
+      CPstaat[5] = CPoud[3]
+      //EO
+      EPstaat[2] = EPoud[4]
+      EPstaat[4] = EPoud[2]
+		  UD2staat[0] = UD2oud[3]
+		  UD2staat[3] = UD2oud[0]
+      break;
+    case "B2":
+      //CO
+      CPstaat[0] = CPoud[6]
+      CPstaat[1] = CPoud[7]
+      CPstaat[6] = CPoud[0]
+      CPstaat[7] = CPoud[1]
+      //EO
+      EPstaat[0] = EPoud[6]
+      EPstaat[6] = EPoud[0]
+		  UD2staat[2] = UD2oud[1]
+		  UD2staat[1] = UD2oud[2]
+      break;
+  }
+}
+
+//movetables
+var CPmovetable = []
+var EPmovetable = []
+var UD2movetable = []
+
+function movetables2() {
+  CPstaat = CPopgelost.slice(0)
+  EPstaat = EPopgelost.slice(0)
+  UD2staat = UD2opgelost.slice(0)
+
+  for (var j = 0; j < 40320; j++) {
+    berekenCPstaat(j)
+    CPmovetable[j] = []
+    for (var i = 0; i < draaienf2.length; i++) {
+      draai3(draaienf2[i])
+      berekenCoordUitStaatF2()
+      CPmovetable[j].push(CPcoord)
+      draai3(draaienf2[i])
+      draai3(draaienf2[i])
+      draai3(draaienf2[i])
+    }
+  }
+
+  for (var j = 0; j < 40320; j++) {
+    berekenEPstaat(j)
+    EPmovetable[j] = []
+    for (var i = 0; i < draaienf2.length; i++) {
+      draai3(draaienf2[i])
+      berekenCoordUitStaatF2()
+      EPmovetable[j].push(EPcoord)
+      draai3(draaienf2[i])
+      draai3(draaienf2[i])
+      draai3(draaienf2[i])
+    }
+  }
+
+  for (var j = 0; j < 24; j++) {
+    berekenUD2staat(j)
+    UD2movetable[j] = []
+    for (var i = 0; i < draaienf2.length; i++) {
+      draai3(draaienf2[i])
+      berekenCoordUitStaatF2()
+      UD2movetable[j].push(UD2coord)
+      draai3(draaienf2[i])
+      draai3(draaienf2[i])
+      draai3(draaienf2[i])
+    }
+  }
+}
+
+movetables2()
