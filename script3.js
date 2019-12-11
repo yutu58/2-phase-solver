@@ -17,8 +17,8 @@ var UD2opgelost = [0, 1, 2, 3]
 var CPstaat;
 var EPstaat;
 var UD2staat;
-var CPtracker;
-var EPtracker;
+var CPtracker = []
+var EPtracker = []
 var Coord2, CPcoord, EPcoord, UD2coord;
 var diepte, diepte2;
 var pruningtableF2 = []
@@ -27,7 +27,7 @@ var solutionF2;
 var failed;
 var tries = 0;
 var extra = ""
-var gebleven = [0] // [diepte, i, j, k, l]
+var gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // [diepte, i, j, k, l]
 
 
 function ga() {
@@ -40,9 +40,10 @@ function ga() {
 
   //interpreteer scramble
   solved = false
-  scramble = (document.getElementById("inputtedscramble").value + " " + extra).split(" ")
+  /*scramble = (document.getElementById("inputtedscramble").value + " " + extra).split(" ")
   scramble.forEach(draai)
-  scramblecoord = Coord
+  scramblecoord = Coord*/
+  scramblecoord = scramblecoordUitPlaatje()
 
   //losop
   losop1()
@@ -57,55 +58,61 @@ function ga() {
 
     if (diepte == 0){
     diepte = 1
-    for (var i = 0; i < draaien.length; i++) {
+    for (var i = gebleven[1]; i < draaien.length; i++) {
       draai(draaien[i])
       if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
         solutionF1 = draaien[i] + " " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+        gebleven = [0, i]
         return;
       }
       scramblestaatF1()
     }
+    gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
     if (diepte == 1){
       diepte = 2
-    for (var i = 0; i < draaien.length; i++) {
-      for (var j = 0; j < draaien.length; j++) {
+    for (var i = gebleven[1]; i < draaien.length; i++) {
+      for (var j = gebleven[2]; j < draaien.length; j++) {
+        scramblestaatF1()
         draai(draaien[i])
         draai(draaien[j])
         if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
           solutionF1 = draaien[i] + " " + draaien[j] + " " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+          gebleven = [1, i, j]
           return;
         }
-        scramblestaatF1()
       }
     }
+    gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
     if (diepte == 2){
       diepte = 3
-    for (var i = 0; i < draaien.length; i++) {
-      for (var j = 0; j < draaien.length; j++) {
-        for (var k = 0; k < draaien.length; k++) {
+    for (var i = gebleven[1]; i < draaien.length; i++) {
+      for (var j = gebleven[2]; j < draaien.length; j++) {
+        for (var k = gebleven[3]; k < draaien.length; k++) {
+          scramblestaatF1()
           draai(draaien[i])
           draai(draaien[j])
           draai(draaien[k])
           if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
             solutionF1 = draaien[i] + " " + draaien[j] + " " + draaien[k] + " " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
             return;
+            gebleven = [2, i, j, k]
           }
-          scramblestaatF1()
         }
       }
     }
+    gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
     if (diepte == 3){
     diepte = 4
-    for (var i = 0; i < draaien.length; i++) {
-      for (var j = 0; j < draaien.length; j++) {
-        for (var k = 0; k < draaien.length; k++) {
-          for (var l = 0; l < draaien.length; l++) {
+    for (var i = gebleven[1]; i < draaien.length; i++) {
+      for (var j = gebleven[2]; j < draaien.length; j++) {
+        for (var k = gebleven[3]; k < draaien.length; k++) {
+          for (var l = gebleven[4]; l < draaien.length; l++) {
             scramblestaatF1()
             draai(draaien[i])
             draai(draaien[j])
@@ -113,21 +120,23 @@ function ga() {
             draai(draaien[l])
             if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
               solutionF1 = draaien[i] + " " + draaien[j] + " " + draaien[k] + " " + draaien[l] + " " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+              gebleven = [3, i, j, k, l]
               return;
             }
           }
         }
       }
     }
+    gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
     if (diepte == 4){
     diepte = 5
-    for (var i = 0; i < draaien.length; i++) {
-      for (var j = 0; j < draaien.length; j++) {
-        for (var k = 0; k < draaien.length; k++) {
-          for (var l = 0; l < draaien.length; l++) {
-            for (var m = 0; m < draaien.length; m++) {
+    for (var i = gebleven[1]; i < draaien.length; i++) {
+      for (var j = gebleven[2]; j < draaien.length; j++) {
+        for (var k = gebleven[3]; k < draaien.length; k++) {
+          for (var l = gebleven[4]; l < draaien.length; l++) {
+            for (var m = gebleven[5]; m < draaien.length; m++) {
               scramblestaatF1()
               draai(draaien[i])
               draai(draaien[j])
@@ -136,6 +145,7 @@ function ga() {
               draai(draaien[m])
               if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
                 solutionF1 = draaien[i] + " " + draaien[j] + " " + draaien[k] + " " + draaien[l] + " " + draaien[m] + " " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+                gebleven = [4, i, j, k, l, m]
                 return;
               }
             }
@@ -143,16 +153,17 @@ function ga() {
         }
       }
     }
+    gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
     
     if (diepte == 5) {
     diepte = 6
-    for (var i = 0; i < draaien.length; i++) {
-      for (var j = 0; j < draaien.length; j++) {
-        for (var k = 0; k < draaien.length; k++) {
-          for (var l = 0; l < draaien.length; l++) {
-            for (var m = 0; m < draaien.length; m++) {
-              for (var n = 0; n < draaien.length; n++) {
+    for (var i = gebleven[1]; i < draaien.length; i++) {
+      for (var j = gebleven[2]; j < draaien.length; j++) {
+        for (var k = gebleven[3]; k < draaien.length; k++) {
+          for (var l = gebleven[4]; l < draaien.length; l++) {
+            for (var m = gebleven[5]; m < draaien.length; m++) {
+              for (var n = gebleven[6]; n < draaien.length; n++) {
                 scramblestaatF1()
                 draai(draaien[i])
                 draai(draaien[j])
@@ -162,6 +173,7 @@ function ga() {
                 draai(draaien[n])
                 if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
                   solutionF1 = draaien[i] + " " + draaien[j] + " " + draaien[k] + " " + draaien[l] + " " + draaien[m] + " " + draaien[n] + "  " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+                  gebleven = [5, i, j, k, l, m, n]
                   return;
                 }
               }
@@ -170,17 +182,18 @@ function ga() {
         }
       }
     }
+    gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
     if (diepte == 6) {
     diepte = 7
-    for (var i = 0; i < draaien.length; i++) {
-      for (var j = 0; j < draaien.length; j++) {
-        for (var k = 0; k < draaien.length; k++) {
-          for (var l = 0; l < draaien.length; l++) {
-            for (var m = 0; m < draaien.length; m++) {
-              for (var n = 0; n < draaien.length; n++) {
-                for (var o = 0; o < draaien.length; o++)
+    for (var i = gebleven[1]; i < draaien.length; i++) {
+      for (var j = gebleven[2]; j < draaien.length; j++) {
+        for (var k = gebleven[3]; k < draaien.length; k++) {
+          for (var l = gebleven[4]; l < draaien.length; l++) {
+            for (var m = gebleven[5]; m < draaien.length; m++) {
+              for (var n = gebleven[6]; n < draaien.length; n++) {
+                for (var o = gebleven[7]; o < draaien.length; o++){
                 scramblestaatF1()
                 draai(draaien[i])
                 draai(draaien[j])
@@ -191,7 +204,9 @@ function ga() {
                 draai(draaien[o])
                 if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
                   solutionF1 = draaien[i] + " " + draaien[j] + " " + draaien[k] + " " + draaien[l] + " " + draaien[m] + " " + draaien[n] + "  " + draaien[o] + " "+ pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+                  gebleven = [6, i, j, k, l, m, n, o]
                   return;
+                }
                 }
               }
             }
@@ -199,17 +214,20 @@ function ga() {
         }
       }
     }
+    gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
   }
+  document.getElementById("solution1").innerHTML = solutionF1
 
 
   //ConvertToFase2
   ConvertToFase2()
   function ConvertToFase2() {
     fase = 2
-    fase2scramble = scramble.concat(solutionF1.split(" "))
+    /*fase2scramble = scramble.concat(solutionF1.split(" "))
     CPtracker = [0, 1, 2, 3, 4, 5, 6, 7]
-    EPtracker = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    EPtracker = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]*/
+    fase2scramble = solutionF1.split(" ")
     fase2scramble.forEach(convertdraai)
 
     CPstaat = CPtracker.slice(0)
@@ -225,6 +243,8 @@ function ga() {
     }
     berekenCoordUitStaatF2();
     scramblecoord = Coord.slice(0)
+
+  
   }
   //losop2()
   losop2()
@@ -369,14 +389,22 @@ function ga() {
   
   //solution = ...
   if (!failed) {
-    document.getElementById("solution1").innerHTML = extra + " " + solutionF1 + " " + solutionF2
+    document.getElementById("solution1").innerHTML = "Oplossing: " + extra + " " + solutionF1 + " " + solutionF2
     extra = ""
     tries = 0
     gebleven = [0]
   }
   else if (failed) {
-    extra = draaien[tries]
     tries += 1
+    if(gebleven[gebleven.length-2] != 17){
+      gebleven[gebleven.length-2] += 1
+      gebleven[gebleven.length-1] = 0
+    }
+    else{
+      gebleven[gebleven.length-3] += 1
+      gebleven[gebleven.length-2] = 0
+      gebleven[gebleven.length-1] = 0
+    }
     ga()
   }
 }
