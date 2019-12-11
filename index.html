@@ -3,7 +3,23 @@
 
 <head>
 	<link href="style.css" rel="stylesheet" type="text/css" />
-	<script src="script3.js">
+</head>
+
+<body>
+	<input type="text" value="scramble" id="inputtedscramble"  style="width: 70%">
+<input type="button" onclick="ga()">
+<input type = "button" onclick="changecolor()">
+<input type = "button" value = "test" onclick = "scramblecoordUitPlaatje()">
+<input type = "button" value = "fresh" onclick = "fresh()">
+<p id="solution1"></p>
+<br/>
+<br/>
+<canvas id="myCanvas" width="450" height="330"
+style="border:1px solid #c3c3c3;">
+
+	<script src="scriptO.js">
+	</script>
+  <script src="drawer.js">
 	</script>
 	<script src="coords3.js">
 	</script>
@@ -15,11 +31,7 @@
 	</script>
     <script src="prune3.js">
 	</script>
-</head>
+  
 
-<body>
-	<input type="text" value="scramble" id="inputtedscramble"  style="width: 70%">
-<input type="button" onclick="ga()">
-<p id="solution1"></p>
 </body>
 </html>
