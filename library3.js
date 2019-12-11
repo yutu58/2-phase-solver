@@ -43,3 +43,9 @@ function sleep(delay) {
   var start = new Date().getTime();
   while (new Date().getTime() < start + delay);
 }
+
+function sortTable(tbody, index, ascending) {
+    Array.prototype.slice.call(tbody.children).sort(
+        (tr1, tr2) => tr1.children[index].textContent.localeCompare(tr2.children[index].textContent, undefined, {'numeric': true}) * (ascending ? 1 : -1)
+        ).forEach(tr => tbody.appendChild(tr));
+}
