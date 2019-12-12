@@ -57,12 +57,12 @@ function drawGrid(context) {
   context.stroke();
 }
 
-  //fill up with grey
-for (var i = 0; i < 15; i++){
+//fill up with grey
+for (var i = 0; i < 15; i++) {
   for (var j = 0; j < 11; j++) {
-    let x = 30*i
-    let y = 30*j
-    fillSquare(context, x+1, y+1, "#DCDCDC")
+    let x = 30 * i
+    let y = 30 * j
+    fillSquare(context, x + 1, y + 1, "#DCDCDC")
   }
 }
 
@@ -176,6 +176,12 @@ function repaint() {
 }
 
 function checkparity() {
+  //dubbele pieces? (moet als eerste)
+  if (Array.from(new Set(CPtracker)).length != CPtracker.length || Array.from(new Set(EPtracker)).length != EPtracker.length) {
+    verkeerdgetekend = true
+    return;
+  }
+
   //CO & EO fouten
   if ((arrSum(EOstaat) % 2) != 0) {
     verkeerdgetekend = true
@@ -189,8 +195,8 @@ function checkparity() {
   //CPEP fouten
   let CPtemp = CPtracker.slice(0)
   let EPtemp = EPtracker.slice(0)
-  
-  if ((countnumberof2cyles(CPtemp) + countnumberof2cyles(EPtemp)) % 2 == 1){
+
+  if ((countnumberof2cyles(CPtemp) + countnumberof2cyles(EPtemp)) % 2 == 1) {
     verkeerdgetekend = true
     return;
   }
@@ -212,26 +218,27 @@ function scramblecoordUitPlaatje() {
 
     //CPtracker
     let ocpcolors = [stickers[oncornerpiece[i][0]].color, stickers[oncornerpiece[i][1]].color, stickers[oncornerpiece[i][2]].color]
-    if (ocpcolors.includes("white") && ocpcolors.includes("blue") && ocpcolors.includes("orange")) {
+     if (ocpcolors.includes("white") && ocpcolors.includes("blue") && ocpcolors.includes("orange") && ocpcolors[(ocpcolors.indexOf("white")+1)%3] == "orange") {
       CPtracker[i] = 0
-    } else if (ocpcolors.includes("white") && ocpcolors.includes("blue") && ocpcolors.includes("red")) {
+    } else if (ocpcolors.includes("white") && ocpcolors.includes("blue") && ocpcolors.includes("red") && ocpcolors[(ocpcolors.indexOf("white")+1)%3] == "blue") {
       CPtracker[i] = 1
-    } else if (ocpcolors.includes("white") && ocpcolors.includes("green") && ocpcolors.includes("red")) {
+    } else if (ocpcolors.includes("white") && ocpcolors.includes("green") && ocpcolors.includes("red") && ocpcolors[(ocpcolors.indexOf("white")+1)%3] == "red") {
       CPtracker[i] = 2
-    } else if (ocpcolors.includes("white") && ocpcolors.includes("green") && ocpcolors.includes("orange")) {
+    } else if (ocpcolors.includes("white") && ocpcolors.includes("green") && ocpcolors.includes("orange") && ocpcolors[(ocpcolors.indexOf("white")+1)%3] == "green") {
       CPtracker[i] = 3
-    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("green") && ocpcolors.includes("orange")) {
+    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("green") && ocpcolors.includes("orange") && ocpcolors[(ocpcolors.indexOf("yellow")+1)%3] == "orange") {
       CPtracker[i] = 4
-    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("green") && ocpcolors.includes("red")) {
+    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("green") && ocpcolors.includes("red") && ocpcolors[(ocpcolors.indexOf("yellow")+1)%3] == "green") {
       CPtracker[i] = 5
-    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("blue") && ocpcolors.includes("red")) {
+    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("blue") && ocpcolors.includes("red") && ocpcolors[(ocpcolors.indexOf("yellow")+1)%3] == "red") {
       CPtracker[i] = 6
-    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("blue") && ocpcolors.includes("orange")) {
+    } else if (ocpcolors.includes("yellow") && ocpcolors.includes("blue") && ocpcolors.includes("orange") && ocpcolors[(ocpcolors.indexOf("yellow")+1)%3] == "blue") {
       CPtracker[i] = 7
     } else { //error fix (if unexistent edge)
       verkeerdgetekend = true
       return;
-    }
+      }
+
   }
 
   //find EOstaat & UD1staat & EPtracker
