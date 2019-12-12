@@ -28,10 +28,9 @@ function idtoplaats(id) {
 
 //
 var colornumber = 0
-function changecolor() {
+function changecolor(p) {
   var colors = ["white", "yellow", "green", "red", "blue", "orange"]
-  colornumber = (colornumber + 1) % 6
-  selectedcolor = colors[colornumber]
+  selectedcolor = colors[p]
 }
 
 function getSquare(canvas, evt) {
