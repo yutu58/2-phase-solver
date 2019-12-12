@@ -56,6 +56,15 @@ function drawGrid(context) {
   context.stroke();
 }
 
+  //fill up with grey
+for (var i = 0; i < 15; i++){
+  for (var j = 0; j < 11; j++) {
+    let x = 30*i
+    let y = 30*j
+    fillSquare(context, x+1, y+1, "#DCDCDC")
+  }
+}
+
 function fillSquare(context, x, y, color) {
   context.fillStyle = color
   context.fillRect(x, y, 29, 29);
