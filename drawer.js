@@ -26,7 +26,7 @@ function idtoplaats(id) {
   return [x, y];
 }
 
-//
+//picking a color
 var colornumber = 0
 function changecolor(p) {
   var colors = ["white", "yellow", "green", "red", "blue", "orange"]
