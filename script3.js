@@ -255,8 +255,10 @@ function ga() {
     diepte2 = 0
     if (Array.isArray(pruningtableF2[Coord[0]])) {
       if (Array.isArray(pruningtableF2[Coord[0]][Coord[1]])) {
+        if (pruningtableF2[Coord[0]][Coord[1]][Coord[2]]) {
         solutionF2 = pruningtableF2[Coord[0]][Coord[1]][Coord[2]]
         return;
+        }
       }
     }
 
@@ -265,8 +267,10 @@ function ga() {
       draai(draaienf2[i])
       if (Array.isArray(pruningtableF2[Coord[0]])) {
         if (Array.isArray(pruningtableF2[Coord[0]][Coord[1]])) {
+          if (pruningtableF2[Coord[0]][Coord[1]][Coord[2]]) {
           solutionF2 = draaienf2[i] + " " + pruningtableF2[Coord[0]][Coord[1]][Coord[2]]
           return;
+          }
         }
       }
       scramblestaatF2()
@@ -279,8 +283,10 @@ function ga() {
         draai(draaienf2[j])
         if (Array.isArray(pruningtableF2[Coord[0]])) {
           if (Array.isArray(pruningtableF2[Coord[0]][Coord[1]])) {
+            if (pruningtableF2[Coord[0]][Coord[1]][Coord[2]]) {
             solutionF2 = draaienf2[i] + " " + draaienf2[j] + " " + pruningtableF2[Coord[0]][Coord[1]][Coord[2]]
             return;
+            }
           }
         }
         scramblestaatF2()
