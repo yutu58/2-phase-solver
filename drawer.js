@@ -26,7 +26,7 @@ function idtoplaats(id) {
   return [x, y];
 }
 
-//picking a color
+//
 var colornumber = 0
 function changecolor(p) {
   var colors = ["white", "yellow", "green", "red", "blue", "orange"]
@@ -41,6 +41,7 @@ function getSquare(canvas, evt) {
   };
 }
 
+//draw grid
 function drawGrid(context) {
   for (var x = 0.5; x < 451; x += 30) {
     context.moveTo(x, 0);
@@ -174,7 +175,29 @@ function repaint() {
   }
 }
 
+function checkparity() {
+  //CO & EO fouten
+  if ((arrSum(EOstaat) % 2) != 0) {
+    verkeerdgetekend = true
+    return;
+  }
+  if ((arrSum(COstaat) % 3) != 0) {
+    verkeerdgetekend = true
+    return;
+  }
+
+  //CPEP fouten
+  let CPtemp = CPtracker.slice(0)
+  let EPtemp = EPtracker.slice(0)
+  
+  if ((countnumberof2cyles(CPtemp) + countnumberof2cyles(EPtemp)) % 2 == 1){
+    verkeerdgetekend = true
+    return;
+  }
+}
+
 function scramblecoordUitPlaatje() {
+  verkeerdgetekend = false
   //find COstaat & CPtracker
   COstaat = [0, 0, 0, 0, 0, 0, 0, 0]
   let cornerstickers = [0, 2, 6, 8, 9, 11, 15, 17, 18, 20, 24, 26, 27, 29, 33, 35, 36, 38, 42, 44, 45, 47, 51, 53]
@@ -205,8 +228,10 @@ function scramblecoordUitPlaatje() {
       CPtracker[i] = 6
     } else if (ocpcolors.includes("yellow") && ocpcolors.includes("blue") && ocpcolors.includes("orange")) {
       CPtracker[i] = 7
+    } else { //error fix (if unexistent edge)
+      verkeerdgetekend = true
+      return;
     }
-
   }
 
   //find EOstaat & UD1staat & EPtracker
@@ -232,7 +257,7 @@ function scramblecoordUitPlaatje() {
         }
       }
     }
-    //EPtracker
+    //EPtracker + error fix
     let oepcolors = [stickers[onedgepiece[i][0]].color, stickers[onedgepiece[i][1]].color]
     if (oepcolors.includes("white") && oepcolors.includes("blue")) {
       EPtracker[i] = 0
@@ -258,9 +283,12 @@ function scramblecoordUitPlaatje() {
       EPtracker[i] = 10
     } else if (oepcolors.includes("yellow") && oepcolors.includes("orange")) {
       EPtracker[i] = 11
+    } else { //error fix (if unexistent edge)
+      verkeerdgetekend = true
+      return;
     }
   }
-
+  checkparity()
   berekenCoordUitStaatF1()
   return Coord;
 }
