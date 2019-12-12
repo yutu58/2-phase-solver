@@ -24,6 +24,7 @@ var diepte, diepte2;
 var pruningtableF2 = []
 var solutionF1;
 var solutionF2;
+var verkeerdgetekend;
 var failed;
 var tries = 0;
 var extra = ""
@@ -46,7 +47,13 @@ function ga() {
   scramblecoord = scramblecoordUitPlaatje()
 
   //losop
-  losop1()
+  if (!verkeerdgetekend) {
+  losop()
+  } else {
+    alert("Helaas, de kubus is verkeerd ingekleurd")
+  }
+  function losop(){
+    losop1()
   function losop1() {
     scramblestaatF1()
 
@@ -412,6 +419,7 @@ function ga() {
       gebleven[gebleven.length-1] = 0
     }
     ga()
+  }
   }
 }
 
