@@ -44,8 +44,25 @@ function sleep(delay) {
   while (new Date().getTime() < start + delay);
 }
 
-function sortTable(tbody, index, ascending) {
-    Array.prototype.slice.call(tbody.children).sort(
-        (tr1, tr2) => tr1.children[index].textContent.localeCompare(tr2.children[index].textContent, undefined, {'numeric': true}) * (ascending ? 1 : -1)
-        ).forEach(tr => tbody.appendChild(tr));
+function countnumberof2cyles(arr, arrsolved){
+  let done = []
+  var numberofcycles = 0
+  var i = 0
+  
+  while(done.length != arr.length) {
+  //kleinste i die nog niet gedaan is
+  function checkifdone(a){
+    return !done.includes(a)
+  }
+  let temp = arr.filter(checkifdone)
+  i = Math.min(...temp)
+  numberofcycles += 1
+  while(!done.includes(i)) {
+    done.push(i)
+  i = arr[i]
+  }  
+  } 
+  return ((arr.length - numberofcycles) % 2)
 }
+
+const arrSum = arr => arr.reduce((a,b) => a + b, 0)
