@@ -44,25 +44,30 @@ function sleep(delay) {
   while (new Date().getTime() < start + delay);
 }
 
-function countnumberof2cyles(arr, arrsolved){
+function countnumberof2cyles(arr, arrsolved) {
   let done = []
   var numberofcycles = 0
   var i = 0
-  
-  while(done.length != arr.length) {
-  //kleinste i die nog niet gedaan is
-  function checkifdone(a){
-    return !done.includes(a)
+
+  while (done.length != arr.length) {
+    //kleinste i die nog niet gedaan is
+    function checkifdone(a) {
+      return !done.includes(a)
+    }
+    let temp = arr.filter(checkifdone)
+    i = Math.min(...temp)
+    numberofcycles += 1
+    while (!done.includes(i)) {
+      done.push(i)
+      i = arr[i]
+    }
   }
-  let temp = arr.filter(checkifdone)
-  i = Math.min(...temp)
-  numberofcycles += 1
-  while(!done.includes(i)) {
-    done.push(i)
-  i = arr[i]
-  }  
-  } 
   return ((arr.length - numberofcycles) % 2)
 }
 
-const arrSum = arr => arr.reduce((a,b) => a + b, 0)
+const arrSum = arr => arr.reduce((a, b) => a + b, 0)
+
+function removelastcharacter(a) {
+  let x = a.slice(0, -1)
+  return x
+}
