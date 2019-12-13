@@ -1,0 +1,12 @@
+    #settingsmenu {
+      visibility: shown;
+      z-index: 10;
+      position: absolute;
+      height: 50%;
+      width: 50%;
+      text-align: center;
+      margin-left: 25%;
+      background-color: white;
+      border-style: solid;
+      border-radius: 5%;
+    }
