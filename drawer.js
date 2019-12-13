@@ -1,6 +1,11 @@
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
+var selectedcanvas = document.getElementById('selected');
+var ctx = selectedcanvas.getContext('2d')
+var colors = ["white", "orange", "green", "red", "blue", "yellow"]
 var selectedcolor = "grey"
+ctx.fillStyle = selectedcolor
+ctx.fillRect(0, 0, 30, 30)
 
 //define stickers
 class sticker {
@@ -29,8 +34,10 @@ function idtoplaats(id) {
 //
 var colornumber = 0
 function changecolor(p) {
-  var colors = ["white", "yellow", "green", "red", "blue", "orange"]
   selectedcolor = colors[p]
+  ctx.fillStyle = selectedcolor
+  ctx.fillRect(0, 0, 30, 30)
+
 }
 
 function getSquare(canvas, evt) {
@@ -154,6 +161,15 @@ fresh()
 function fresh() {
   for (var i = 0; i < stickers.length; i++) {
     stickers[i].color = "grey"
+  }
+  repaint()
+}
+
+function clean() {
+  for (var j = 0; j < colors.length; j++) {
+    for (var i = 0; i < 9; i++) {
+    stickers[j*9 + i].color = colors[j]
+  }
   }
   repaint()
 }
