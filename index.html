@@ -6,26 +6,32 @@
 </head>
 
 <body>
-	<input type="text" value="scramble" id="inputtedscramble"  style="width: 70%">
-<input type="button" onclick="ga()">
-<input type = "button" onclick="changecolor()">
-<input type = "button" value = "test" onclick = "scramblecoordUitPlaatje()">
-<input type = "button" value = "fresh" onclick = "fresh()">
-<input type = "button" value = "switch" onclick = "switchmode()">
-<p id="solution1"></p>
- 
+	<input type="text" value="scramble" id="inputtedscramble"  style="width: 50%">
+<input type="button" onclick="ga()" value="Oplossen">
+<input type = "button" value = "Switch modus" onclick = "switchmode()">
+<p id="mode"><b>Input modus</b>: Slagen</p>
+<p id="solution1"><b>Oplossing</b>: </p>
+<div id="settingsmenu" class="settingsmenu">
+  <iframe src="https://giphy.com/embed/ZRXYymLPrOklq" width="30%" height="30%" style=margin-top:5% frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+  <p style=margin-top:20% id="status"><b>Aan het laden...</b></p>
+</div> 
 <p> <input type = "button" value="wit" onclick="changecolor(0)">
   <input type = "button" value="blauw" onclick="changecolor(4)">
 <input type = "button" value = "rood" onclick="changecolor(3)">
 <input type = "button" value="groen" onclick="changecolor(2)">
-<input type = "button" value="oranje" onclick="changecolor(5)">
-<input type = "button" value="geel" onclick="changecolor(1)">
+<input type = "button" value="oranje" onclick="changecolor(1)">
+<input type = "button" value="geel" onclick="changecolor(5)">
 </p>
+<canvas id="selected" width="30" height ="30" style="border:1px solid #c3c3c3;"></canvas>
 
 <br/>
 <br/>
 <canvas id="myCanvas" width="450" height="330"
 style="border:1px solid #c3c3c3;"></canvas>
+<p>
+<input type = "button" value = "Leeg" onclick = "fresh()">
+<input type = "button" value = "Opgelost" onclick = "clean()">
+</p>
 
 	<script src="script3.js">
 	</script>
