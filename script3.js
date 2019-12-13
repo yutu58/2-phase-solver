@@ -30,12 +30,15 @@ var tries = 0;
 var extra = ""
 var gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] // [diepte, i, j, k, l]
 var mode = "byscramble"
+var oploslengte;
 
 function switchmode() {
   if (mode == "byscramble") {
     mode = "byimage"
+    document.getElementById("mode").innerHTML = "<b>Input modus</b>: Afbeelding"
   } else {
     mode = "byscramble"
+    document.getElementById("mode").innerHTML = "<b>Input modus</b>: Slagen"
   }
 
 }
@@ -51,10 +54,17 @@ function ga() {
   //interpreteer scramble
   if (mode == "byscramble") {
     solved = false
-    scramble = (document.getElementById("inputtedscramble").value + " " + extra).split(" ")
-    scramble.forEach(draai)
-    scramblecoord = Coord
-    losop1()
+    scramble = (document.getElementById("inputtedscramble").value).split(" ")
+    const iseendraai = (gegevendraai) => draaien.includes(gegevendraai)
+    if (scramble.every(iseendraai)) {
+      scramble.forEach(draai)
+      scramblecoord = Coord
+      losop1()
+    }
+    else {
+      alert("Helaas, dit zijn niet allemaal kloppende slagen")
+      return;
+    }
   } else if (mode == "byimage") {
     scramblecoord = scramblecoordUitPlaatje()
     if (!verkeerdgetekend) {
@@ -64,17 +74,14 @@ function ga() {
       return;
     }
   }
-
   //losop
-
-
-  losop1()
   function losop1() {
+
     scramblestaatF1()
 
     diepte = gebleven[0]
     if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
-      solutionF1 = pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+      solutionF1 = pruningtableF1[Coord[0]][Coord[1]][Coord[2]] + " "
       return;
     }
 
@@ -113,6 +120,7 @@ function ga() {
       diepte = 3
       for (var i = gebleven[1]; i < draaien.length; i++) {
         for (var j = gebleven[2]; j < draaien.length; j++) {
+           if (Math.floor(i / 3) != Math.floor(j / 3)) {
           for (var k = gebleven[3]; k < draaien.length; k++) {
             scramblestaatF1()
             draai(draaien[i])
@@ -124,6 +132,7 @@ function ga() {
               gebleven = [2, i, j, k]
             }
           }
+          }
         }
       }
       gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -133,6 +142,7 @@ function ga() {
       diepte = 4
       for (var i = gebleven[1]; i < draaien.length; i++) {
         for (var j = gebleven[2]; j < draaien.length; j++) {
+           if (Math.floor(i / 3) != Math.floor(j / 3)) {
           for (var k = gebleven[3]; k < draaien.length; k++) {
             for (var l = gebleven[4]; l < draaien.length; l++) {
               scramblestaatF1()
@@ -147,6 +157,7 @@ function ga() {
               }
             }
           }
+          }
         }
       }
       gebleven = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -156,6 +167,7 @@ function ga() {
       diepte = 5
       for (var i = gebleven[1]; i < draaien.length; i++) {
         for (var j = gebleven[2]; j < draaien.length; j++) {
+           if (Math.floor(i / 3) != Math.floor(j / 3)) {
           for (var k = gebleven[3]; k < draaien.length; k++) {
             for (var l = gebleven[4]; l < draaien.length; l++) {
               for (var m = gebleven[5]; m < draaien.length; m++) {
@@ -171,6 +183,7 @@ function ga() {
                   return;
                 }
               }
+              }
             }
           }
         }
@@ -182,6 +195,7 @@ function ga() {
       diepte = 6
       for (var i = gebleven[1]; i < draaien.length; i++) {
         for (var j = gebleven[2]; j < draaien.length; j++) {
+           if (Math.floor(i / 3) != Math.floor(j / 3)) {
           for (var k = gebleven[3]; k < draaien.length; k++) {
             for (var l = gebleven[4]; l < draaien.length; l++) {
               for (var m = gebleven[5]; m < draaien.length; m++) {
@@ -201,6 +215,7 @@ function ga() {
                 }
               }
             }
+            }
           }
         }
       }
@@ -211,23 +226,25 @@ function ga() {
       diepte = 7
       for (var i = gebleven[1]; i < draaien.length; i++) {
         for (var j = gebleven[2]; j < draaien.length; j++) {
-          for (var k = gebleven[3]; k < draaien.length; k++) {
-            for (var l = gebleven[4]; l < draaien.length; l++) {
-              for (var m = gebleven[5]; m < draaien.length; m++) {
-                for (var n = gebleven[6]; n < draaien.length; n++) {
-                  for (var o = gebleven[7]; o < draaien.length; o++) {
-                    scramblestaatF1()
-                    draai(draaien[i])
-                    draai(draaien[j])
-                    draai(draaien[k])
-                    draai(draaien[l])
-                    draai(draaien[m])
-                    draai(draaien[n])
-                    draai(draaien[o])
-                    if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
-                      solutionF1 = draaien[i] + " " + draaien[j] + " " + draaien[k] + " " + draaien[l] + " " + draaien[m] + " " + draaien[n] + "  " + draaien[o] + " " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
-                      gebleven = [6, i, j, k, l, m, n, o]
-                      return;
+          if (Math.floor(i / 3) != Math.floor(j / 3)) {
+            for (var k = gebleven[3]; k < draaien.length; k++) {
+              for (var l = gebleven[4]; l < draaien.length; l++) {
+                for (var m = gebleven[5]; m < draaien.length; m++) {
+                  for (var n = gebleven[6]; n < draaien.length; n++) {
+                    for (var o = gebleven[7]; o < draaien.length; o++) {
+                      scramblestaatF1()
+                      draai(draaien[i])
+                      draai(draaien[j])
+                      draai(draaien[k])
+                      draai(draaien[l])
+                      draai(draaien[m])
+                      draai(draaien[n])
+                      draai(draaien[o])
+                      if (pruningtableF1[Coord[0]][Coord[1]][Coord[2]]) {
+                        solutionF1 = draaien[i] + " " + draaien[j] + " " + draaien[k] + " " + draaien[l] + " " + draaien[m] + " " + draaien[n] + "  " + draaien[o] + " " + pruningtableF1[Coord[0]][Coord[1]][Coord[2]]
+                        gebleven = [6, i, j, k, l, m, n, o]
+                        return;
+                      }
                     }
                   }
                 }
@@ -238,7 +255,6 @@ function ga() {
       }
     }
   }
-  document.getElementById("solution1").innerHTML = solutionF1
 
   //ConvertToFase2
   ConvertToFase2()
@@ -320,6 +336,7 @@ function ga() {
     diepte2 = 3
     for (var i = 0; i < draaienf2.length; i++) {
       for (var j = 0; j < draaienf2.length; j++) {
+        if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
         for (var k = 0; k < draaienf2.length; k++) {
           draai(draaienf2[i])
           draai(draaienf2[j])
@@ -332,6 +349,7 @@ function ga() {
               }
             }
           }
+          }
           scramblestaatF2()
         }
       }
@@ -340,6 +358,7 @@ function ga() {
     diepte2 = 4
     for (var i = 0; i < draaienf2.length; i++) {
       for (var j = 0; j < draaienf2.length; j++) {
+        if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
         for (var k = 0; k < draaienf2.length; k++) {
           for (var l = 0; l < draaienf2.length; l++) {
             scramblestaatF2()
@@ -356,6 +375,7 @@ function ga() {
               }
             }
           }
+          }
         }
       }
     }
@@ -363,6 +383,7 @@ function ga() {
     diepte2 = 5
     for (var i = 0; i < draaienf2.length; i++) {
       for (var j = 0; j < draaienf2.length; j++) {
+        if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
         for (var k = 0; k < draaienf2.length; k++) {
           for (var l = 0; l < draaienf2.length; l++) {
             for (var m = 0; m < draaienf2.length; m++) {
@@ -382,6 +403,7 @@ function ga() {
               }
             }
           }
+          }
         }
       }
     }
@@ -389,6 +411,7 @@ function ga() {
     diepte2 = 6
     for (var i = 0; i < draaienf2.length; i++) {
       for (var j = 0; j < draaienf2.length; j++) {
+        if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
         for (var k = 0; k < draaienf2.length; k++) {
           for (var l = 0; l < draaienf2.length; l++) {
             for (var m = 0; m < draaienf2.length; m++) {
@@ -410,54 +433,68 @@ function ga() {
                 }
               }
             }
-          }
-        }
-      }
-    }
-
-      diepte2 = 7
-    for (var i = 0; i < draaienf2.length; i++) {
-      for (var j = 0; j < draaienf2.length; j++) {
-        for (var k = 0; k < draaienf2.length; k++) {
-          for (var l = 0; l < draaienf2.length; l++) {
-            for (var m = 0; m < draaienf2.length; m++) {
-              for (var n = 0; n < draaienf2.length; n++) {
-                  for (var o = 0; o < draaienf2.length; o++) {
-                scramblestaatF2()
-                draai(draaienf2[i])
-                draai(draaienf2[j])
-                draai(draaienf2[k])
-                draai(draaienf2[l])
-                draai(draaienf2[m])
-                draai(draaienf2[n])
-                draai(draaienf2[o])
-                if (Array.isArray(pruningtableF2[Coord[0]])) {
-                  if (Array.isArray(pruningtableF2[Coord[0]][Coord[1]])) {
-                    if (pruningtableF2[Coord[0]][Coord[1]][Coord[2]]) {
-                      solutionF2 = draaienf2[i] + " " + draaienf2[j] + " " + draaienf2[k] + " " + draaienf2[l] + " " + draaienf2[m] + " " + draaienf2[n] + " " + draaienf2[o] + " " + pruningtableF2[Coord[0]][Coord[1]][Coord[2]]
-                      return;
-                    }
-                  }
-                }
-              }
             }
           }
         }
       }
     }
+
+    diepte2 = 7
+    for (var i = 0; i < draaienf2.length; i++) {
+      for (var j = 0; j < draaienf2.length; j++) {
+        if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
+        for (var k = 0; k < draaienf2.length; k++) {
+          for (var l = 0; l < draaienf2.length; l++) {
+            for (var m = 0; m < draaienf2.length; m++) {
+              for (var n = 0; n < draaienf2.length; n++) {
+                for (var o = 0; o < draaienf2.length; o++) {
+                  scramblestaatF2()
+                  draai(draaienf2[i])
+                  draai(draaienf2[j])
+                  draai(draaienf2[k])
+                  draai(draaienf2[l])
+                  draai(draaienf2[m])
+                  draai(draaienf2[n])
+                  draai(draaienf2[o])
+                  if (Array.isArray(pruningtableF2[Coord[0]])) {
+                    if (Array.isArray(pruningtableF2[Coord[0]][Coord[1]])) {
+                      if (pruningtableF2[Coord[0]][Coord[1]][Coord[2]]) {
+                        solutionF2 = draaienf2[i] + " " + draaienf2[j] + " " + draaienf2[k] + " " + draaienf2[l] + " " + draaienf2[m] + " " + draaienf2[n] + " " + draaienf2[o] + " " + pruningtableF2[Coord[0]][Coord[1]][Coord[2]]
+                        return;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            }
+          }
+        }
+      }
     }
     failed = true
   }
 
   //solution = ...
   if (!failed) {
-    document.getElementById("solution1").innerHTML = "Oplossing: " + solutionF1 + " " + solutionF2
+    var oplossing = solutionF1 + " " + solutionF2
+    var oplosdraaien = (oplossing.split(" "))
+    var oploslengte = 0
+    for (var i = 0; i < oplosdraaien.length; i++) {
+      if (draaien.includes(oplosdraaien[i].charAt(0))) {
+        oploslengte += 1
+      }
+    }
+    if (oploslengte > 1 || oploslengte == 0) {
+      document.getElementById("solution1").innerHTML = "<b>Oplossing</b>: " + oplossing + " (" + oploslengte + " draaien)"
+    } else if (oploslengte == 1) {
+      document.getElementById("solution1").innerHTML = "<b>Oplossing</b>: " + oplossing + " (" + oploslengte + " draai)"
+    }
     extra = ""
     tries = 0
     gebleven = [0]
   }
   else if (failed) {
-    tries += 1
     if (gebleven[gebleven.length - 1] != 17) {
       gebleven[gebleven.length - 1] += 1
     }
