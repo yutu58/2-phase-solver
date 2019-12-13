@@ -169,6 +169,7 @@ function ga() {
         for (var j = gebleven[2]; j < draaien.length; j++) {
            if (Math.floor(i / 3) != Math.floor(j / 3)) {
           for (var k = gebleven[3]; k < draaien.length; k++) {
+            if (Math.floor(i / 3) != Math.floor(j / 3)) {
             for (var l = gebleven[4]; l < draaien.length; l++) {
               for (var m = gebleven[5]; m < draaien.length; m++) {
                 scramblestaatF1()
@@ -183,6 +184,7 @@ function ga() {
                   return;
                 }
               }
+            }
               }
             }
           }
@@ -197,6 +199,7 @@ function ga() {
         for (var j = gebleven[2]; j < draaien.length; j++) {
            if (Math.floor(i / 3) != Math.floor(j / 3)) {
           for (var k = gebleven[3]; k < draaien.length; k++) {
+            if (Math.floor(j / 3) != Math.floor(k / 3)) {
             for (var l = gebleven[4]; l < draaien.length; l++) {
               for (var m = gebleven[5]; m < draaien.length; m++) {
                 for (var n = gebleven[6]; n < draaien.length; n++) {
@@ -214,6 +217,7 @@ function ga() {
                   }
                 }
               }
+              }
             }
             }
           }
@@ -228,6 +232,7 @@ function ga() {
         for (var j = gebleven[2]; j < draaien.length; j++) {
           if (Math.floor(i / 3) != Math.floor(j / 3)) {
             for (var k = gebleven[3]; k < draaien.length; k++) {
+              if (Math.floor(j / 3) != Math.floor(k / 3)) {
               for (var l = gebleven[4]; l < draaien.length; l++) {
                 for (var m = gebleven[5]; m < draaien.length; m++) {
                   for (var n = gebleven[6]; n < draaien.length; n++) {
@@ -247,6 +252,7 @@ function ga() {
                       }
                     }
                   }
+                }
                 }
               }
             }
@@ -360,6 +366,7 @@ function ga() {
       for (var j = 0; j < draaienf2.length; j++) {
         if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
         for (var k = 0; k < draaienf2.length; k++) {
+           if (draaienf2[k].charAt(0) != draaienf2[j].charAt(0)){
           for (var l = 0; l < draaienf2.length; l++) {
             scramblestaatF2()
             draai(draaienf2[i])
@@ -376,6 +383,7 @@ function ga() {
             }
           }
           }
+          }
         }
       }
     }
@@ -385,6 +393,7 @@ function ga() {
       for (var j = 0; j < draaienf2.length; j++) {
         if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
         for (var k = 0; k < draaienf2.length; k++) {
+           if (draaienf2[k].charAt(0) != draaienf2[j].charAt(0)){
           for (var l = 0; l < draaienf2.length; l++) {
             for (var m = 0; m < draaienf2.length; m++) {
               scramblestaatF2()
@@ -404,6 +413,7 @@ function ga() {
             }
           }
           }
+          }
         }
       }
     }
@@ -413,6 +423,7 @@ function ga() {
       for (var j = 0; j < draaienf2.length; j++) {
         if (draaienf2[i].charAt(0) != draaienf2[j].charAt(0)){
         for (var k = 0; k < draaienf2.length; k++) {
+           if (draaienf2[k].charAt(0) != draaienf2[j].charAt(0)){
           for (var l = 0; l < draaienf2.length; l++) {
             for (var m = 0; m < draaienf2.length; m++) {
               for (var n = 0; n < draaienf2.length; n++) {
@@ -432,6 +443,7 @@ function ga() {
                   }
                 }
               }
+            }
             }
             }
           }
